@@ -55,6 +55,25 @@ public class BooksShopTest {
         });
     }
 
+
+    @Test
+    void authorizeApiTest() {
+        step("Check API user's authorize", () -> {
+            given()
+                    .contentType("application/json")
+                    .accept("application/json")
+                    .body(userLoginData)
+                    .when()
+                    .log().uri()
+                    .log().body()
+                    .post("/Account/v1/GenerateToken")
+                    .then()
+                    .log().body()
+                    .body("status", is("Success"))
+                    .body("result", is("User authorized successfully."));
+        });
+    }
+
     @Test
     void authorizeWithListenerTest() {
         step("Check API user's authorize with Listener", () -> {
