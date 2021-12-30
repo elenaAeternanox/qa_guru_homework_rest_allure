@@ -1,6 +1,8 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.github.elenaAeternaNox.rest_api.filters.CustomLogFilter.customLogFilter;
@@ -12,6 +14,11 @@ public class BooksShopTest extends ApiRequestsBase {
 
     String userLoginData = "{\"userName\": \"alex\"," +
             "  \"password\": \"asdsad#frew_DFS2\"}";
+
+    @BeforeAll
+    static void prepare() {
+        RestAssured.baseURI = "https://demoqa.com";
+    }
 
     @Test
     void noLogsTest() {
@@ -54,6 +61,7 @@ public class BooksShopTest extends ApiRequestsBase {
         step("Check API user's authorize", () -> {
             given()
                     .contentType("application/json")
+                    .accept("application/json")
                     .body(userLoginData)
                     .when()
                     .log().uri()
@@ -80,7 +88,6 @@ public class BooksShopTest extends ApiRequestsBase {
                     .post("/Account/v1/GenerateToken")
                     .then()
                     .log().body()
-                    .statusCode(200)
                     .body("status", is("Success"))
                     .body("result", is("User authorized successfully."));
         });
