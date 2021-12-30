@@ -1,4 +1,4 @@
-package com.github.elenaAeternaNox.rest_api.tests;
+package com.github.elenaAeternaNox.rest_api.test_base;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;

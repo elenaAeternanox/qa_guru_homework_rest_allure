@@ -1,12 +1,13 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
-public class BookShopSpecificationTest extends ApiRequestsBase{
+public class BookShopSpecificationTest extends ApiRequestsBase {
 
     String userLoginData = "{\"userName\": \"alex\"," +
             "  \"password\": \"asdsad#frew_DFS2\"}";

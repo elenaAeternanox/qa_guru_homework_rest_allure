@@ -1,5 +1,6 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

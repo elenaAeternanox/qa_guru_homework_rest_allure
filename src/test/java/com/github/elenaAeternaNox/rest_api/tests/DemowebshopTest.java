@@ -2,6 +2,7 @@ package com.github.elenaAeternaNox.rest_api.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;

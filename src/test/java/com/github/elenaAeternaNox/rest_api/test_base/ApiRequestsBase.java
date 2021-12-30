@@ -1,4 +1,4 @@
-package com.github.elenaAeternaNox.rest_api.tests;
+package com.github.elenaAeternaNox.rest_api.test_base;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
