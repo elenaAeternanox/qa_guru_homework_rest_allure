@@ -66,7 +66,6 @@ public class BooksShopTest {
         });
     }
 
-
     @Test
     void authorizeApiTest() {
         step("Check API user's authorize", () -> {
