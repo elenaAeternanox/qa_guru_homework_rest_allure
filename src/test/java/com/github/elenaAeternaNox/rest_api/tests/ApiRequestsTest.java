@@ -118,6 +118,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         String expectedPantoneValue = "17-2031";
         String expectedUrl = "https://reqres.in/#support-heading";
         String expectedText = "To keep ReqRes free, contributions towards server costs are appreciated!";
+
         step("Check API single resource", () -> {
             SingleResource singleResource =
                     given()
@@ -140,6 +141,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
 
     @Test
     public void checkContainsLastName() {
+        step("Check API users contain last_name = ~/ds/", () -> {
         given()
                 .spec(reqresRequest)
                 .when()
@@ -150,5 +152,6 @@ public class ApiRequestsTest extends ApiRequestsBase {
                 .statusCode(200)
                 .body("data.findAll{it.last_name =~/ds/}.last_name.flatten()",
                         hasItems("Edwards", "Fields"));
+        });
     }
 }
