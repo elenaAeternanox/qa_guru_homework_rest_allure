@@ -6,7 +6,6 @@ import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
 import com.github.elenaAeternaNox.rest_api.models.reqres.single_resource.SingleResource;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.restassured.RestAssured;
-import org.graalvm.compiler.lir.LIRInstruction;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -150,6 +149,6 @@ public class ApiRequestsTest extends ApiRequestsBase {
                 .log().all()
                 .statusCode(200)
                 .body("data.findAll{it.last_name =~/ds/}.last_name.flatten()",
-                        hasItems("Edwards" , "Fields"));
+                        hasItems("Edwards", "Fields"));
     }
 }
