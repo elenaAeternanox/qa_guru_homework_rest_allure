@@ -1,8 +1,9 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
-import com.github.elenaAeternaNox.rest_api.models.reqres.Register;
+import com.github.elenaAeternaNox.rest_api.models.reqres.Registr;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.restassured.RestAssured;
+import org.graalvm.compiler.nodes.graphbuilderconf.InvocationPlugins;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         body = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
 
         step("Check API register successful", () -> {
-            Register register =
+            Registr registration =
                     given()
                             .spec(reqresRequest)
                             .body(body)
@@ -36,10 +37,10 @@ public class ApiRequestsTest extends ApiRequestsBase {
                             .post("/register")
                             .then()
                             .spec(successResponseSpec)
-                            .extract().as(Register.class);
+                            .extract().as(Registr.class);
 
-           assertEquals(expectedToken, register.getToken());
-           assertEquals(expectedId, register.getId());
+           assertEquals(expectedToken, registration.token);
+           assertEquals(expectedId, registration.id);
         });
     }
 
@@ -49,7 +50,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         body = "{ \"email\": \"sydney@fife\" }";
 
         step("Check API register unsuccessful", () -> {
-            Register register =
+            Registr registration =
                     given()
                             .spec(reqresRequest)
                             .body(body)
@@ -57,7 +58,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
                             .post("/register")
                             .then()
                             .statusCode(400)
-                            .extract().as(Register.class);
+                            .extract().as(Registr.class);
            // assertEquals(expectedError, register.getError());
         });
     }
