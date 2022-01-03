@@ -1,5 +1,7 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import com.github.elenaAeternaNox.rest_api.models.books_shop.GenerateToken;
+import com.github.elenaAeternaNox.rest_api.models.books_shop.UserLoginData;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,11 +11,20 @@ import static com.github.elenaAeternaNox.rest_api.filters.CustomLogFilter.custom
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BooksShopTest {
 
-    String userLoginData = "{\"userName\": \"alex\"," +
-            "  \"password\": \"asdsad#frew_DFS2\"}";
+    private UserLoginData userLoginData = new UserLoginData();
+
+    public UserLoginData setUserLoginData() {
+        userLoginData.setUserName("alex");
+        userLoginData.setPassword("asdsad#frew_DFS2");
+        return userLoginData;
+    }
+
+    String expectedStatus = "Success";
+    String expectedResult = "User authorized successfully.";
 
     @BeforeAll
     static void prepare() {
@@ -59,56 +70,65 @@ public class BooksShopTest {
     @Test
     void authorizeApiTest() {
         step("Check API user's authorize", () -> {
-            given()
-                    .contentType("application/json")
-                    .accept("application/json")
-                    .body(userLoginData)
-                    .when()
-                    .log().uri()
-                    .log().body()
-                    .post("/Account/v1/GenerateToken")
-                    .then()
-                    .log().body()
-                    .body("status", is("Success"))
-                    .body("result", is("User authorized successfully."));
+            GenerateToken generateToken =
+                    given()
+                            .contentType("application/json")
+                            .accept("application/json")
+                            .body(setUserLoginData())
+                            .when()
+                            .log().uri()
+                            .log().body()
+                            .post("/Account/v1/GenerateToken")
+                            .then()
+                            .log().body()
+                            .extract().as(GenerateToken.class);
+
+            assertEquals(expectedStatus, generateToken.getStatus());
+            assertEquals(expectedResult, generateToken.getResult());
         });
     }
 
     @Test
     void authorizeWithListenerTest() {
         step("Check API user's authorize with Listener", () -> {
-            given()
-                    .filter(new AllureRestAssured())
-                    .contentType("application/json")
-                    .accept("application/json")
-                    .body(userLoginData)
-                    .when()
-                    .log().uri()
-                    .log().body()
-                    .post("/Account/v1/GenerateToken")
-                    .then()
-                    .log().body()
-                    .body("status", is("Success"))
-                    .body("result", is("User authorized successfully."));
+            GenerateToken generateToken =
+                    given()
+                            .filter(new AllureRestAssured())
+                            .contentType("application/json")
+                            .accept("application/json")
+                            .body(setUserLoginData())
+                            .when()
+                            .log().uri()
+                            .log().body()
+                            .post("/Account/v1/GenerateToken")
+                            .then()
+                            .log().body()
+                            .extract().as(GenerateToken.class);
+
+            assertEquals(expectedStatus, generateToken.getStatus());
+            assertEquals(expectedResult, generateToken.getResult());
         });
     }
 
     @Test
     void authorizeWithTemplatesTest() {
         step("Check API user's authorize with custom log filter", () -> {
-            given()
-                    .filter(customLogFilter().withCustomTemplates())
-                    .contentType("application/json")
-                    .accept("application/json")
-                    .body(userLoginData)
-                    .when()
-                    .log().uri()
-                    .log().body()
-                    .post("/Account/v1/GenerateToken")
-                    .then()
-                    .log().body()
-                    .body("status", is("Success"))
-                    .body("result", is("User authorized successfully."));
+            GenerateToken generateToken =
+                    given()
+                            .filter(customLogFilter().withCustomTemplates())
+                            .contentType("application/json")
+                            .accept("application/json")
+                            .body(setUserLoginData())
+                            .when()
+                            .log().uri()
+                            .log().body()
+                            .post("/Account/v1/GenerateToken")
+                            .then()
+                            .log().body()
+                            .extract().as(GenerateToken.class);
+
+            assertEquals(expectedStatus, generateToken.getStatus());
+            assertEquals(expectedResult, generateToken.getResult());
         });
     }
 }

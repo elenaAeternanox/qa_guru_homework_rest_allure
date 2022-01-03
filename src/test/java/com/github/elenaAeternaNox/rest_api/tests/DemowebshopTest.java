@@ -2,6 +2,7 @@ package com.github.elenaAeternaNox.rest_api.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
 import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Tag;
@@ -18,6 +19,7 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DemowebshopTest extends UiTestBase {
 
@@ -33,17 +35,23 @@ public class DemowebshopTest extends UiTestBase {
     @Tag("API")
     void checkWishListAPI() {
         body = "addtocart_53.EnteredQuantity=1";
+
+        String expectedUpdatetopwishlist = "(1)";
+        String expectedMessage = "The product has been added to your <a href=\"/wishlist\">wishlist</a>";
+
         step("Add product to Wishlist", () -> {
-            given()
-                    .spec(demoWebShopRequest)
-                    .body(body)
-                    .when()
-                    .post("addproducttocart/details/53/2")
-                    .then()
-                    .log().all()
-                    .statusCode(200)
-                    .body("updatetopwishlistsectionhtml", is("(1)"))
-                    .body("message", is("The product has been added to your <a href=\"/wishlist\">wishlist</a>"));
+            WishList wishList =
+                    given()
+                            .spec(demoWebShopRequest)
+                            .body(body)
+                            .when()
+                            .post("addproducttocart/details/53/2")
+                            .then()
+                            .log().all()
+                            .statusCode(200)
+                            .extract().as(WishList.class);
+            assertEquals(expectedUpdatetopwishlist, wishList.getUpdatetopwishlistsectionhtml());
+            assertEquals(expectedMessage, wishList.getMessage());
         });
     }
 
@@ -89,7 +97,8 @@ public class DemowebshopTest extends UiTestBase {
                     address.$(".name").shouldHave(text("qa qa")));
 
             step("Check the email", () ->
-                    address.$(".email").shouldHave(text("Email: elena@qu.guru")));
+                    address.$(".email").shouldHave(text("Email: " + login)));
+            //"Email: elena@qu.guru
 
             step("Check the phone number", () ->
                     address.$(".phone").shouldHave(text("Phone number: +1234567")));

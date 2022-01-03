@@ -1,21 +1,24 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
 import com.github.elenaAeternaNox.rest_api.models.reqres.Registr;
+import com.github.elenaAeternaNox.rest_api.models.reqres.RegistrationData;
+import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
+import com.github.elenaAeternaNox.rest_api.models.reqres.single_resource.SingleResource;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.restassured.RestAssured;
-import org.graalvm.compiler.nodes.graphbuilderconf.InvocationPlugins;
+import org.graalvm.compiler.lir.LIRInstruction;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ApiRequestsTest extends ApiRequestsBase {
 
-    private String body;
+    private RegistrationData registrationData;
 
     @BeforeAll
     static void prepare() {
@@ -24,58 +27,73 @@ public class ApiRequestsTest extends ApiRequestsBase {
 
     @Test
     void registerSuccessful() {
+        registrationData = new RegistrationData();
+        registrationData.setEmail("eve.holt@reqres.in");
+        registrationData.setPassword("pistol");
+
         String expectedToken = "QpwL5tke4Pnpja7X4";
         int expectedId = 4;
-        body = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
 
         step("Check API register successful", () -> {
             Registr registration =
                     given()
                             .spec(reqresRequest)
-                            .body(body)
+                            .body(registrationData)
                             .when()
                             .post("/register")
                             .then()
                             .spec(successResponseSpec)
                             .extract().as(Registr.class);
 
-           assertEquals(expectedToken, registration.token);
-           assertEquals(expectedId, registration.id);
+            assertEquals(expectedToken, registration.getToken());
+            assertEquals(expectedId, registration.getId());
         });
     }
 
     @Test
     void registerUnsuccessful() {
-        String expectedError = "Missing password";
-        body = "{ \"email\": \"sydney@fife\" }";
+        registrationData = new RegistrationData();
+        registrationData.setEmail("sydney@fife");
 
+        String expectedError = "Missing password";
         step("Check API register unsuccessful", () -> {
             Registr registration =
                     given()
                             .spec(reqresRequest)
-                            .body(body)
+                            .body(registrationData)
                             .when()
                             .post("/register")
                             .then()
                             .statusCode(400)
                             .extract().as(Registr.class);
-           // assertEquals(expectedError, register.getError());
+            assertEquals(expectedError, registration.getError());
         });
     }
 
     @Test
     void createUser() {
-        body = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
+        Users existUser = new Users();
+        existUser.setName("morpheus");
+        existUser.setJob("leader");
+
+        String expectedName = "morpheus";
+        String expectedJob = "leader";
 
         step("Check API create user", () -> {
-            given()
-                    .spec(reqresRequest)
-                    .body(body)
-                    .when()
-                    .post("/users")
-                    .then()
-                    .statusCode(201)
-                    .body("name", is("morpheus"), "job", is("leader"), "id", notNullValue());
+            Users user =
+                    given()
+                            .spec(reqresRequest)
+                            .body(existUser)
+                            .when()
+                            .post("/users")
+                            .then()
+                            .statusCode(201)
+                            .extract().as(Users.class);
+
+            assertEquals(expectedName, user.getName());
+            assertEquals(expectedJob, user.getJob());
+            assertNotNull(user.getId());
+            assertNotNull(user.getCreatedAt());
         });
     }
 
@@ -93,16 +111,29 @@ public class ApiRequestsTest extends ApiRequestsBase {
 
     @Test
     void singleResource() {
+        int expectedId = 2;
+        String expectedName = "fuchsia rose";
+        int expectedYear = 2001;
+        String expectedColor = "#C74375";
+        String expectedPantoneValue = "17-2031";
+        String expectedUrl = "https://reqres.in/#support-heading";
+        String expectedText = "To keep ReqRes free, contributions towards server costs are appreciated!";
         step("Check API single resource", () -> {
-            given()
-                    .when()
-                    .get("/api/unknown/2")
-                    .then()
-                    .spec(successResponseSpec)
-                    .body("data.id", is(2), "data.name", is("fuchsia rose"), "data.year", is(2001),
-                            "data.color", is("#C74375"), "data.pantone_value", is("17-2031"),
-                            "support.url", is("https://reqres.in/#support-heading"),
-                            "support.text", is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+            SingleResource singleResource =
+                    given()
+                            .when()
+                            .get("/api/unknown/2")
+                            .then()
+                            .spec(successResponseSpec)
+                            .extract().as(SingleResource.class);
+
+            assertEquals(expectedId, singleResource.getData().getId());
+            assertEquals(expectedName, singleResource.getData().getName());
+            assertEquals(expectedYear, singleResource.getData().getYear());
+            assertEquals(expectedColor, singleResource.getData().getColor());
+            assertEquals(expectedPantoneValue, singleResource.getData().getPantoneValue());
+            assertEquals(expectedUrl, singleResource.getSupport().getUrl());
+            assertEquals(expectedText, singleResource.getSupport().getText());
         });
     }
 }

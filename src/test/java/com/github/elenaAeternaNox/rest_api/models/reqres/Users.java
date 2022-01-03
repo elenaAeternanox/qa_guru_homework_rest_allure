@@ -5,8 +5,10 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Registr {
-    private Integer id;
-    private String token;
-    private String error;
+public class Users {
+    private String createdAt;
+    private String id;
+    private String job;
+    private String name;
+
 }
