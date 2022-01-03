@@ -103,7 +103,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
             given()
                     .spec(reqresRequest)
                     .when()
-                    .get("/api/users/23")
+                    .get("/users/23")
                     .then()
                     .statusCode(404)
                     .body(is("{}"));
@@ -124,7 +124,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
                     given()
                             .spec(reqresRequest)
                             .when()
-                            .get("/api/unknown/2")
+                            .get("/unknown/2")
                             .then()
                             .spec(successResponseSpec)
                             .extract().as(SingleResource.class);
@@ -145,7 +145,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
                 .spec(reqresRequest)
                 .when()
                 .log().all()
-                .get("https://reqres.in/api/users?page=2")
+                .get("/users?page=2")
                 .then()
                 .log().all()
                 .statusCode(200)
