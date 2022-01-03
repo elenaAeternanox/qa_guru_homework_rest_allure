@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -102,6 +101,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
     void singleUserNotFound() {
         step("Check API user isn't found", () -> {
             given()
+                    .spec(reqresRequest)
                     .when()
                     .get("/api/users/23")
                     .then()
@@ -122,11 +122,11 @@ public class ApiRequestsTest extends ApiRequestsBase {
         step("Check API single resource", () -> {
             SingleResource singleResource =
                     given()
+                            .spec(reqresRequest)
                             .when()
                             .get("/api/unknown/2")
                             .then()
                             .spec(successResponseSpec)
-                            .body("data.findAll{it.name}.name.flatten()", hasItem("fuchsia rose"))
                             .extract().as(SingleResource.class);
 
             assertEquals(expectedId, singleResource.getData().getId());
@@ -137,5 +137,19 @@ public class ApiRequestsTest extends ApiRequestsBase {
             assertEquals(expectedUrl, singleResource.getSupport().getUrl());
             assertEquals(expectedText, singleResource.getSupport().getText());
         });
+    }
+
+    @Test
+    public void checkContainsLastName() {
+        given()
+                .spec(reqresRequest)
+                .when()
+                .log().all()
+                .get("https://reqres.in/api/users?page=2")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("data.findAll{it.last_name =~/ds/}.last_name.flatten()",
+                        hasItems("Edwards" , "Fields"));
     }
 }

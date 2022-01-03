@@ -12,6 +12,7 @@ public class ApiRequestsBase {
     public static RequestSpecification reqresRequest = with()
             .baseUri("https://reqres.in")
             .basePath("/api")
+            .filter(customLogFilter().withCustomTemplates())
             .log().all()
             .contentType(ContentType.JSON);
 

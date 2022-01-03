@@ -1,9 +1,11 @@
 package com.github.elenaAeternaNox.rest_api.models.reqres.single_resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResourceData {
     private String color;
     private Long id;
