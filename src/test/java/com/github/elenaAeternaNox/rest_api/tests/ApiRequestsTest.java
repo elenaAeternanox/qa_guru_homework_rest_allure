@@ -140,18 +140,18 @@ public class ApiRequestsTest extends ApiRequestsBase {
     }
 
     @Test
-    public void checkContainsLastName() {
-        step("Check API users contain last_name = ~/ds/", () -> {
+    public void checkNameInListResource() {
+        step("Check API name = ~/ru/ in LIST <RESOURCE>", () -> {
         given()
                 .spec(reqresRequest)
                 .when()
                 .log().all()
-                .get("/users?page=2")
+                .get("/unknown")
                 .then()
                 .log().all()
                 .statusCode(200)
-                .body("data.findAll{it.last_name =~/ds/}.last_name.flatten()",
-                        hasItems("Edwards", "Fields"));
+                .body("data.findAll{it.name =~/ru/}.name.flatten()",
+                        hasItems("cerulean", "true red"));
         });
     }
 }
