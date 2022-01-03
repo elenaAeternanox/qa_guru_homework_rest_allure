@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -125,6 +126,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
                             .get("/api/unknown/2")
                             .then()
                             .spec(successResponseSpec)
+                            .body("data.findAll{it.name}.name.flatten()", hasItem("fuchsia rose"))
                             .extract().as(SingleResource.class);
 
             assertEquals(expectedId, singleResource.getData().getId());
