@@ -1,5 +1,6 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import com.github.elenaAeternaNox.rest_api.models.reqres.Register;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,7 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ApiRequestsTest extends ApiRequestsBase {
 
@@ -21,33 +23,42 @@ public class ApiRequestsTest extends ApiRequestsBase {
 
     @Test
     void registerSuccessful() {
+        String expectedToken = "QpwL5tke4Pnpja7X4";
+        int expectedId = 4;
         body = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
 
         step("Check API register successful", () -> {
-            given()
-                    .spec(reqresRequest)
-                    .body(body)
-                    .when()
-                    .post("/register")
-                    .then()
-                    .spec(successResponseSpec)
-                    .body("token", is("QpwL5tke4Pnpja7X4"), "id", is(4));
+            Register register =
+                    given()
+                            .spec(reqresRequest)
+                            .body(body)
+                            .when()
+                            .post("/register")
+                            .then()
+                            .spec(successResponseSpec)
+                            .extract().as(Register.class);
+
+           assertEquals(expectedToken, register.getToken());
+           assertEquals(expectedId, register.getId());
         });
     }
 
     @Test
     void registerUnsuccessful() {
+        String expectedError = "Missing password";
         body = "{ \"email\": \"sydney@fife\" }";
 
         step("Check API register unsuccessful", () -> {
-            given()
-                    .spec(reqresRequest)
-                    .body(body)
-                    .when()
-                    .post("/register")
-                    .then()
-                    .statusCode(400)
-                    .body("error", is("Missing password"));
+            Register register =
+                    given()
+                            .spec(reqresRequest)
+                            .body(body)
+                            .when()
+                            .post("/register")
+                            .then()
+                            .statusCode(400)
+                            .extract().as(Register.class);
+           // assertEquals(expectedError, register.getError());
         });
     }
 
