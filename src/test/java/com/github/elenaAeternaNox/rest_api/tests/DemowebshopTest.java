@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
 import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -21,6 +23,8 @@ import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Story("DemoWebShop")
+@Feature("DemoWebShop")
 public class DemowebshopTest extends UiTestBase {
 
     private String body;

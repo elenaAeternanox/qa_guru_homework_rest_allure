@@ -5,8 +5,11 @@ import com.github.elenaAeternaNox.rest_api.models.reqres.RegistrationData;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
 import com.github.elenaAeternaNox.rest_api.models.reqres.single_resource.SingleResource;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
@@ -15,6 +18,9 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Story("ReqresIn")
+@Feature("reqres.in")
+@Tag("API")
 public class ApiRequestsTest extends ApiRequestsBase {
 
     private RegistrationData registrationData;
