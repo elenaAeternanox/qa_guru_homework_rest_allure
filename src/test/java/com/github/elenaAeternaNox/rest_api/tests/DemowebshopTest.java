@@ -102,7 +102,6 @@ public class DemowebshopTest extends UiTestBase {
 
             step("Check the email", () ->
                     address.$(".email").shouldHave(text("Email: " + login)));
-            //"Email: elena@qu.guru
 
             step("Check the phone number", () ->
                     address.$(".phone").shouldHave(text("Phone number: +1234567")));
