@@ -8,6 +8,7 @@ import io.qameta.allure.*;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -80,6 +81,7 @@ public class BooksShopTest {
 
     @Microservice("Authorization")
     @Test
+    @Disabled
     void authorizeApiTest() {
         step("Check API user's authorize", () -> {
             GenerateToken generateToken =
