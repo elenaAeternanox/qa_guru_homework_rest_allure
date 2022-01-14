@@ -1,7 +1,10 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import annotations.Layer;
+import annotations.Microservice;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,8 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
+@Layer("rest")
+@Owner("ekomarova")
 @Story("BookShop")
 @Feature("BookShopWithSpec")
 public class BookShopSpecificationTest extends ApiRequestsBase {
@@ -17,6 +22,7 @@ public class BookShopSpecificationTest extends ApiRequestsBase {
     String userLoginData = "{\"userName\": \"alex\"," +
             "  \"password\": \"asdsad#frew_DFS2\"}";
 
+    @Microservice("Authorization")
     @Tag("API")
     @Test
     void authorizeWithSpecificationTest() {
