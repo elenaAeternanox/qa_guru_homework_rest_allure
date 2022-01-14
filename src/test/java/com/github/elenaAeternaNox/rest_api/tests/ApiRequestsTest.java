@@ -5,10 +5,7 @@ import com.github.elenaAeternaNox.rest_api.models.reqres.RegistrationData;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
 import com.github.elenaAeternaNox.rest_api.models.reqres.single_resource.SingleResource;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Layer;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -34,6 +31,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         RestAssured.baseURI = "https://reqres.in/";
     }
 
+    @Microservice("Registration")
     @Test
     void registerSuccessful() {
         registrationData = new RegistrationData();
@@ -59,6 +57,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         });
     }
 
+    @Microservice("Registration")
     @Test
     void registerUnsuccessful() {
         registrationData = new RegistrationData();
@@ -79,6 +78,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         });
     }
 
+    @Microservice("Users")
     @Test
     void createUser() {
         Users existUser = new Users();
@@ -106,6 +106,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         });
     }
 
+    @Microservice("Users")
     @Test
     void singleUserNotFound() {
         step("Check API user isn't found", () -> {
@@ -119,6 +120,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         });
     }
 
+    @Microservice("Users")
     @Test
     void singleResource() {
         int expectedId = 2;
@@ -149,6 +151,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
         });
     }
 
+    @Microservice("Users")
     @Test
     public void checkNameInListResource() {
         step("Check API name = ~/ru/ in LIST <RESOURCE>", () -> {

@@ -4,10 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
 import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Layer;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -39,6 +36,7 @@ public class DemowebshopTest extends UiTestBase {
             .log().all()
             .contentType("application/x-www-form-urlencoded; charset=UTF-8");
 
+    @Microservice("Wish list")
     @Test
     @Tag("API")
     void checkWishListAPI() {
@@ -63,6 +61,7 @@ public class DemowebshopTest extends UiTestBase {
         });
     }
 
+    @Microservice("Address")
     @Layer("web")
     @Test
     @Tags({@Tag("API"), @Tag("UI")})

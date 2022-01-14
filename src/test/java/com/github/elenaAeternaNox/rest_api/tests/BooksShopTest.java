@@ -2,10 +2,7 @@ package com.github.elenaAeternaNox.rest_api.tests;
 
 import com.github.elenaAeternaNox.rest_api.models.books_shop.GenerateToken;
 import com.github.elenaAeternaNox.rest_api.models.books_shop.UserLoginData;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Layer;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,6 +38,7 @@ public class BooksShopTest {
         RestAssured.baseURI = "https://demoqa.com";
     }
 
+    @Microservice("Books")
     @Test
     void noLogsTest() {
         step("Check API books without logs", () -> {
@@ -51,6 +49,7 @@ public class BooksShopTest {
         });
     }
 
+    @Microservice("Books")
     @Test
     void withAllLogsTest() {
         step("Check API books with all logs", () -> {
@@ -63,6 +62,7 @@ public class BooksShopTest {
         });
     }
 
+    @Microservice("Books")
     @Test
     void withSomeLogsTest() {
         step("Check API books with some logs", () -> {
@@ -76,6 +76,7 @@ public class BooksShopTest {
         });
     }
 
+    @Microservice("Authorization")
     @Test
     void authorizeApiTest() {
         step("Check API user's authorize", () -> {
@@ -97,6 +98,7 @@ public class BooksShopTest {
         });
     }
 
+    @Microservice("Authorization")
     @Test
     void authorizeWithListenerTest() {
         step("Check API user's authorize with Listener", () -> {
@@ -119,6 +121,7 @@ public class BooksShopTest {
         });
     }
 
+    @Microservice("Authorization")
     @Test
     void authorizeWithTemplatesTest() {
         step("Check API user's authorize with custom log filter", () -> {
