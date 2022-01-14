@@ -1,5 +1,7 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import annotations.Layer;
+import annotations.Microservice;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Registr;
 import com.github.elenaAeternaNox.rest_api.models.reqres.RegistrationData;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Users;

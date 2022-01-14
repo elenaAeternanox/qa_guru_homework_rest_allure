@@ -23,6 +23,7 @@ allure {
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'io.qameta.allure:allure-java-commons:2.16.1'
     testImplementation(
             "io.rest-assured:rest-assured:4.3.1",
             "io.rest-assured:json-schema-validator:4.3.1",

@@ -1,5 +1,7 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
+import annotations.Layer;
+import annotations.Microservice;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
