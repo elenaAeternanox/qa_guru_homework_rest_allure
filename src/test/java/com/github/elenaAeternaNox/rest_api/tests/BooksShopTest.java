@@ -3,6 +3,8 @@ package com.github.elenaAeternaNox.rest_api.tests;
 import com.github.elenaAeternaNox.rest_api.models.books_shop.GenerateToken;
 import com.github.elenaAeternaNox.rest_api.models.books_shop.UserLoginData;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Layer;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
@@ -16,6 +18,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Layer("rest")
+@Owner("ekomarova")
 @Story("BookShop")
 @Feature("BookShop")
 @Tag("API")

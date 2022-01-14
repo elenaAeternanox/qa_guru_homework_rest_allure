@@ -5,6 +5,8 @@ import com.codeborne.selenide.SelenideElement;
 import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
 import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Layer;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Tag;
@@ -23,6 +25,8 @@ import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Layer("rest")
+@Owner("ekomarova")
 @Story("DemoWebShop")
 @Feature("DemoWebShop")
 public class DemowebshopTest extends UiTestBase {
@@ -59,6 +63,7 @@ public class DemowebshopTest extends UiTestBase {
         });
     }
 
+    @Layer("web")
     @Test
     @Tags({@Tag("API"), @Tag("UI")})
     void checkUsersAddress() {

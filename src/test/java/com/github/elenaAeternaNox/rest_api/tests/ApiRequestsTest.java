@@ -6,6 +6,8 @@ import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
 import com.github.elenaAeternaNox.rest_api.models.reqres.single_resource.SingleResource;
 import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Layer;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,6 +20,8 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Layer("rest")
+@Owner("ekomarova")
 @Story("ReqresIn")
 @Feature("reqres.in")
 @Tag("API")
