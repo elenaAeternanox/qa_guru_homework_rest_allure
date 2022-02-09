@@ -3,11 +3,6 @@
 The project presents examples and approaches to API testing.
 In [Allure Report](#allure-report) you can find autotests for GET and POST requests, watch how they look without logs, with various options for logs, specifications and models.
 
-<p align="center">
-  <img src="images/screens/ITFinland_screen.png">
-</p>
-
-
 
 ___
 
@@ -107,17 +102,17 @@ The test results can be found in:
 Once the launch is finished you may watch statistics and open the `Allure Report` <img width="2%" title="Allure Report" src="images/logo/Allure_Report_icon.svg">
 
 <p align="center">
-  <img src="images/screens/Jenkins_statistic.PNG">
+  <img src="images/screens/Jenkins_statistic.png">
 </p>
 
 ### Allure Report
 
-Here are the examples of a report about test build with grouping by suits (:point_up: [The list of tests grouped by tag parameter](#the-list-of-tests-grouped-by-tag-parameter))
+Here are the examples of a report about test build with grouping by suits.
 
-The launch with results
+The launch with results.
 
 <p align="center">
-  <img src="images/screens/Allure_results.PNG">
+  <img src="images/screens/Allure_results.png">
 </p>
 
 ### Allure TestOps
@@ -141,13 +136,13 @@ Allure TestOps is used as a storage for all tests cases (automated and manual), 
 :arrow_right: List of launches:
 
 <p align="center">
-  <img src="images/screens/Allure_TestOps_launches.PNG">
+  <img src="images/screens/Allure_TestOps_launches.png">
 </p>
 
 :arrow_right: List of tests grouped by features and their history of launches:
 
 <p align="center">
-  <img src="images/screens/Allure_TestOps_test_cases.PNG">
+  <img src="images/screens/Allure_TestOps_test_cases.png">
 </p>
 
 ### Jira
@@ -155,7 +150,7 @@ Allure TestOps is used as a storage for all tests cases (automated and manual), 
 Also Jira integration is implemented in the project:
 
 <p align="center">
-  <img src="images/screens/Jira.PNG">
+  <img src="images/screens/Jira.png">
 </p>
 
 
