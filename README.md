@@ -175,4 +175,5 @@ The project is configured to send notifications about the results of launches fr
   <img src="images/screens/Telegram_notification.PNG">
 </p>
 
+
 ___
