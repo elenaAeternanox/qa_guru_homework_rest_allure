@@ -1,13 +1,14 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
-import annotations.Layer;
-import annotations.Microservice;
+import com.github.elenaAeternaNox.rest_api.annotations.Layer;
+import com.github.elenaAeternaNox.rest_api.annotations.Microservice;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.github.elenaAeternaNox.rest_api.models.demowebshop.WishList;
 import com.github.elenaAeternaNox.rest_api.test_base.UiTestBase;
 import io.qameta.allure.*;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,6 @@ import static com.github.elenaAeternaNox.rest_api.filters.CustomLogFilter.custom
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.with;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Layer("rest")
@@ -39,6 +39,7 @@ public class DemowebshopTest extends UiTestBase {
             .contentType("application/x-www-form-urlencoded; charset=UTF-8");
 
     @Microservice("Wish list")
+    @DisplayName("Add product to Wishlist")
     @Test
     @Tag("API")
     void checkWishListAPI() {
@@ -47,7 +48,6 @@ public class DemowebshopTest extends UiTestBase {
         String expectedUpdatetopwishlist = "(1)";
         String expectedMessage = "The product has been added to your <a href=\"/wishlist\">wishlist</a>";
 
-        step("Add product to Wishlist", () -> {
             WishList wishList =
                     given()
                             .spec(demoWebShopRequest)
@@ -60,7 +60,6 @@ public class DemowebshopTest extends UiTestBase {
                             .extract().as(WishList.class);
             assertEquals(expectedUpdatetopwishlist, wishList.getUpdatetopwishlistsectionhtml());
             assertEquals(expectedMessage, wishList.getMessage());
-        });
     }
 
     @Microservice("Address")

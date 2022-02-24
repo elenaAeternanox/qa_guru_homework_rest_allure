@@ -1,4 +1,4 @@
-package annotations;
+package com.github.elenaAeternaNox.rest_api.annotations;
 
 import io.qameta.allure.*;
 

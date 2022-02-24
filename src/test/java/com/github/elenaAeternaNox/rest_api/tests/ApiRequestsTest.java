@@ -1,7 +1,7 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
-import annotations.Layer;
-import annotations.Microservice;
+import com.github.elenaAeternaNox.rest_api.annotations.Layer;
+import com.github.elenaAeternaNox.rest_api.annotations.Microservice;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Registr;
 import com.github.elenaAeternaNox.rest_api.models.reqres.RegistrationData;
 import com.github.elenaAeternaNox.rest_api.models.reqres.Users;
@@ -10,6 +10,7 @@ import com.github.elenaAeternaNox.rest_api.test_base.ApiRequestsBase;
 import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +35,7 @@ public class ApiRequestsTest extends ApiRequestsBase {
     }
 
     @Microservice("Registration")
+    @DisplayName("Check API register successful")
     @Test
     void registerSuccessful() {
         registrationData = new RegistrationData();
@@ -43,7 +45,6 @@ public class ApiRequestsTest extends ApiRequestsBase {
         String expectedToken = "QpwL5tke4Pnpja7X4";
         int expectedId = 4;
 
-        step("Check API register successful", () -> {
             Registr registration =
                     given()
                             .spec(reqresRequest)
@@ -56,17 +57,17 @@ public class ApiRequestsTest extends ApiRequestsBase {
 
             assertEquals(expectedToken, registration.getToken());
             assertEquals(expectedId, registration.getId());
-        });
     }
 
     @Microservice("Registration")
+    @DisplayName("Check API register unsuccessful")
     @Test
     void registerUnsuccessful() {
         registrationData = new RegistrationData();
         registrationData.setEmail("sydney@fife");
 
         String expectedError = "Missing password";
-        step("Check API register unsuccessful", () -> {
+
             Registr registration =
                     given()
                             .spec(reqresRequest)
@@ -77,10 +78,10 @@ public class ApiRequestsTest extends ApiRequestsBase {
                             .statusCode(400)
                             .extract().as(Registr.class);
             assertEquals(expectedError, registration.getError());
-        });
     }
 
     @Microservice("Users")
+    @DisplayName("Check API create user")
     @Test
     void createUser() {
         Users existUser = new Users();
@@ -90,7 +91,6 @@ public class ApiRequestsTest extends ApiRequestsBase {
         String expectedName = "morpheus";
         String expectedJob = "leader";
 
-        step("Check API create user", () -> {
             Users user =
                     given()
                             .spec(reqresRequest)
@@ -105,13 +105,12 @@ public class ApiRequestsTest extends ApiRequestsBase {
             assertEquals(expectedJob, user.getJob());
             assertNotNull(user.getId());
             assertNotNull(user.getCreatedAt());
-        });
     }
 
     @Microservice("Users")
+    @DisplayName("Check API user isn't found")
     @Test
     void singleUserNotFound() {
-        step("Check API user isn't found", () -> {
             given()
                     .spec(reqresRequest)
                     .when()
@@ -119,10 +118,10 @@ public class ApiRequestsTest extends ApiRequestsBase {
                     .then()
                     .statusCode(404)
                     .body(is("{}"));
-        });
     }
 
     @Microservice("Users")
+    @DisplayName("Check API single resource")
     @Test
     void singleResource() {
         int expectedId = 2;
@@ -133,7 +132,6 @@ public class ApiRequestsTest extends ApiRequestsBase {
         String expectedUrl = "https://reqres.in/#support-heading";
         String expectedText = "To keep ReqRes free, contributions towards server costs are appreciated!";
 
-        step("Check API single resource", () -> {
             SingleResource singleResource =
                     given()
                             .spec(reqresRequest)
@@ -150,13 +148,12 @@ public class ApiRequestsTest extends ApiRequestsBase {
             assertEquals(expectedPantoneValue, singleResource.getData().getPantoneValue());
             assertEquals(expectedUrl, singleResource.getSupport().getUrl());
             assertEquals(expectedText, singleResource.getSupport().getText());
-        });
     }
 
     @Microservice("Users")
+    @DisplayName("Check API name = ~/ru/ in LIST <RESOURCE>")
     @Test
     public void checkNameInListResource() {
-        step("Check API name = ~/ru/ in LIST <RESOURCE>", () -> {
         given()
                 .spec(reqresRequest)
                 .when()
@@ -167,6 +164,5 @@ public class ApiRequestsTest extends ApiRequestsBase {
                 .statusCode(200)
                 .body("data.findAll{it.name =~/ru/}.name.flatten()",
                         hasItems("cerulean", "true red"));
-        });
     }
 }

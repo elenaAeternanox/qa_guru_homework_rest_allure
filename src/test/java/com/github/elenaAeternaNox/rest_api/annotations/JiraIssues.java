@@ -1,4 +1,4 @@
-package annotations;
+package com.github.elenaAeternaNox.rest_api.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

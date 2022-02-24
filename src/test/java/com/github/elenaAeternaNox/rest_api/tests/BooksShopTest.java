@@ -1,16 +1,13 @@
 package com.github.elenaAeternaNox.rest_api.tests;
 
-import annotations.Layer;
-import annotations.Microservice;
+import com.github.elenaAeternaNox.rest_api.annotations.Layer;
+import com.github.elenaAeternaNox.rest_api.annotations.Microservice;
 import com.github.elenaAeternaNox.rest_api.models.books_shop.GenerateToken;
 import com.github.elenaAeternaNox.rest_api.models.books_shop.UserLoginData;
 import io.qameta.allure.*;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static com.github.elenaAeternaNox.rest_api.filters.CustomLogFilter.customLogFilter;
 import static io.qameta.allure.Allure.step;
@@ -42,33 +39,31 @@ public class BooksShopTest {
     }
 
     @Microservice("Books")
+    @DisplayName("Check API books without logs")
     @Test
     void noLogsTest() {
-        step("Check API books without logs", () -> {
             given()
                     .get("/BookStore/v1/Books")
                     .then()
                     .body("books", hasSize(greaterThan(0)));
-        });
     }
 
     @Microservice("Books")
+    @DisplayName("Check API books with all logs")
     @Test
     void withAllLogsTest() {
-        step("Check API books with all logs", () -> {
             given()
                     .log().all()
                     .get("/BookStore/v1/Books")
                     .then()
                     .log().all()
                     .body("books", hasSize(greaterThan(0)));
-        });
     }
 
     @Microservice("Books")
+    @DisplayName("Check API books with some logs")
     @Test
     void withSomeLogsTest() {
-        step("Check API books with some logs", () -> {
             given()
                     .log().uri()
                     .log().body()
@@ -76,14 +71,13 @@ public class BooksShopTest {
                     .then()
                     .log().body()
                     .body("books", hasSize(greaterThan(0)));
-        });
     }
 
     @Microservice("Authorization")
+    @DisplayName("Check API user's authorize")
     @Test
     @Disabled
     void authorizeApiTest() {
-        step("Check API user's authorize", () -> {
             GenerateToken generateToken =
                     given()
                             .contentType("application/json")
@@ -99,13 +93,12 @@ public class BooksShopTest {
 
             assertEquals(expectedStatus, generateToken.getStatus());
             assertEquals(expectedResult, generateToken.getResult());
-        });
     }
 
     @Microservice("Authorization")
+    @DisplayName("Check API user's authorize with Listener")
     @Test
     void authorizeWithListenerTest() {
-        step("Check API user's authorize with Listener", () -> {
             GenerateToken generateToken =
                     given()
                             .filter(new AllureRestAssured())
@@ -122,13 +115,12 @@ public class BooksShopTest {
 
             assertEquals(expectedStatus, generateToken.getStatus());
             assertEquals(expectedResult, generateToken.getResult());
-        });
     }
 
     @Microservice("Authorization")
+    @DisplayName("Check API user's authorize with custom log filter")
     @Test
     void authorizeWithTemplatesTest() {
-        step("Check API user's authorize with custom log filter", () -> {
             GenerateToken generateToken =
                     given()
                             .filter(customLogFilter().withCustomTemplates())
@@ -145,6 +137,5 @@ public class BooksShopTest {
 
             assertEquals(expectedStatus, generateToken.getStatus());
             assertEquals(expectedResult, generateToken.getResult());
-        });
     }
 }
